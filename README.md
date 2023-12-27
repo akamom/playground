@@ -12,3 +12,4 @@ cd spring-playground \
 ```bash
 mvn spring-boot:run
 ```
+The app is listening on port 8080.
