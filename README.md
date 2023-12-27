@@ -6,7 +6,7 @@
 ## Install
 ```bash
 git clone https://github.com/akamom/playground.git \
-cd spring-playground \
+cd spring-playground
 ```
 ## Run local
 ```bash
