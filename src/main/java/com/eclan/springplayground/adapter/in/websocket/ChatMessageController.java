@@ -28,7 +28,9 @@ public class ChatMessageController {
     // TODO validate that receivedAt is later as createdAt
     private ChatMessage buildOutMessage(ChatMessage messageIn) {
         var receivedAt = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(DATE_PATTERN);
-        var metaIn = messageIn.metaData();
+        // TODO temp solution. has to be improved with validator
+        var metaIn = messageIn.metaData() == null ? new MetaData(receivedAt, receivedAt, null, "no-user")
+                : messageIn.metaData();
         var metaOut = new MetaData(metaIn.createdAt(), receivedAt, null, metaIn.createdBy());
         return new ChatMessage(metaOut, messageIn.chatId(), messageIn.content());
     }
