@@ -1,4 +1,4 @@
-package com.eclan.springplayground.adapter.in.websocket.model;
+package com.eclan.springplayground.adapter.in.chatmessage.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +9,7 @@ public record ChatMessage(
         @NotNull
         int chatId,
         @NotBlank
-        String content) {
+        String content,
+        String username) {
 
 }

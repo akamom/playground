@@ -1,5 +1,6 @@
-package com.eclan.springplayground.adapter.in.websocket;
+package com.eclan.springplayground.adapter.in.chatmessage;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +9,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import com.eclan.springplayground.adapter.in.websocket.model.ChatMessage;
-import com.eclan.springplayground.adapter.in.websocket.model.MetaData;
+import com.eclan.springplayground.adapter.in.chatmessage.model.ChatMessage;
+import com.eclan.springplayground.adapter.in.chatmessage.model.MetaData;
 
 import jakarta.validation.Valid;
 
@@ -20,18 +21,19 @@ public class ChatMessageController {
 
     @MessageMapping("/message")
     @SendTo("/topic/message")
-    public ChatMessage greeting(@Valid ChatMessage messageIn) {
+    public ChatMessage greeting(@Valid ChatMessage messageIn, Principal principal) {
         // TODO validate input.
-        return buildOutMessage(messageIn);
+        String username = principal.getName();
+        return buildOutMessage(messageIn, username);
     }
 
     // TODO validate that receivedAt is later as createdAt
-    private ChatMessage buildOutMessage(ChatMessage messageIn) {
+    private ChatMessage buildOutMessage(ChatMessage messageIn, String username) {
         var receivedAt = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(DATE_PATTERN);
         // TODO temp solution. has to be improved with validator
         var metaIn = messageIn.metaData() == null ? new MetaData(receivedAt, receivedAt, null, "no-user")
                 : messageIn.metaData();
         var metaOut = new MetaData(metaIn.createdAt(), receivedAt, null, metaIn.createdBy());
-        return new ChatMessage(metaOut, messageIn.chatId(), messageIn.content());
+        return new ChatMessage(metaOut, messageIn.chatId(), messageIn.content(), username);
     }
 }

@@ -1,4 +1,4 @@
-package com.eclan.springplayground.adapter.in.websocket;
+package com.eclan.springplayground.adapter.in.chatmessage;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

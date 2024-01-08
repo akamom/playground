@@ -1,4 +1,4 @@
-package com.eclan.springplayground.adapter.in.websocket.model;
+package com.eclan.springplayground.adapter.in.chatmessage.model;
 
 public record MetaData(
         String createdAt,
